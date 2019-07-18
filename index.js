@@ -17,6 +17,6 @@ module.exports = app => {
   app.on(['pull_request.opened', 'pull_request.edited', 'pull_request.reopened'], async context => {
     let pullRequest = context.payload.pull_request;
 
-    new RunMario(pullRequest);
+    new RunMario(pullRequest, "mongodb://localhost:27017/run-mario");
   })
 };

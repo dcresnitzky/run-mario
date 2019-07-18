@@ -1,7 +1,20 @@
+const Migration = require('./migration')
+const mongoose = require('mongoose')
+
 class RunMario {
-  constructor (pullRequest) {
+  constructor (pullRequest, connection) {
+
+    //The pull request object
     this.pullRequest = pullRequest;
-    this.run()
+
+    //Set up default mongoose connection
+    mongoose.connect(connection, { useNewUrlParser: true })
+
+    //Get the default connection
+    this.db = mongoose.connection
+
+    //Bind connection to error event (to get notification of connection errors)
+    this.db.on('error', console.error.bind(console, 'MongoDB connection error:'))
   }
 
   run () {
@@ -31,8 +44,18 @@ class RunMario {
     // Remove o ultimo objeto vazio
     let queryArray = queryBlock[1].split(";").filter(item => item);
 
-    console.log(`queryArray: ${queryArray}`);
-    console.log(queryArray);
+    // Create an instance of model SomeModel
+    let awesome_instance = new Migration({ name: queryBlock[1] })
+
+    // Save the new model instance, passing a callback
+    awesome_instance.save(function (err) {
+      console.log('savinf');
+        if (err) console.log(err); return;
+
+    });
+
+    // console.log(`queryArray: ${queryArray}`);
+    // console.log(queryArray);
 
     try {
       // TODO: Validar a query

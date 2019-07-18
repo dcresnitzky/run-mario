@@ -13,13 +13,15 @@
     "probot-app"
   ],
   "scripts": {
-    "dev": "LOG_LEVEL=trace nodemon",
+    "dev": "LOG_LEVEL=trace nodemon ./node_modules/.bin/probot run ./index.js",
     "start": "probot run ./index.js",
     "lint": "standard --fix",
+    "blah": "nodemon ./blah.js",
     "test": "jest && standard",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
+    "mongoose": "^5.5.11",
     "probot": "^7.2.0"
   },
   "devDependencies": {
@@ -38,7 +40,6 @@
     ]
   },
   "nodemonConfig": {
-    "exec": "npm start",
     "watch": [
       ".env",
       "."
